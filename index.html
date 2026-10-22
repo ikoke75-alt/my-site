@@ -1,3 +1,505 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>김독자의 폰</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --phone-width: 375px;
+            --phone-height: 812px;
+            --status-bar-height: 40px;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        /* 스마트폰 프레임 */
+        .phone-frame {
+            width: var(--phone-width);
+            height: var(--phone-height);
+            background: url('https://w.wallhaven.cc/full/2e/wallhaven-2epp7p.jpg') no-repeat center center/cover;
+            border-radius: 40px;
+            position: relative;
+            overflow: hidden;
+            border: 8px solid #000;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        /* 펀치홀 */
+        .punch-hole {
+            width: 110px;
+            height: 30px;
+            background-color: #000;
+            border-radius: 20px;
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .camera-lens {
+            width: 10px;
+            height: 10px;
+            background-color: #1c1c1c;
+            border-radius: 50%;
+            border: 2px solid #2a2a2a;
+        }
+
+        /* 상태 표시줄 */
+        .status-bar {
+            height: var(--status-bar-height);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+            padding-top: 10px;
+        }
+
+        /* 홈 화면 위젯 */
+        .home-widgets {
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .time {
+            font-size: 64px;
+            font-weight: 200;
+            letter-spacing: -2px;
+        }
+
+        .date {
+            font-size: 16px;
+            font-weight: 400;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        /* 앱 그리드 */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            padding: 20px 25px;
+            margin-top: 60px;
+        }
+
+        .app-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .icon-shape {
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            margin-bottom: 8px;
+            transition: transform 0.2s;
+        }
+
+        .icon-shape:active {
+            transform: scale(0.92);
+        }
+
+        .app-name {
+            font-size: 12px;
+            font-weight: 400;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+        }
+
+        /* 앱별 배경색 */
+        .bg-phone { background: linear-gradient(135deg, #075E54, #128C7E); }
+        .bg-messages { background: linear-gradient(135deg, #FAD02C, #FFD13B); }
+        .bg-gallery { background: linear-gradient(135deg, #E0C3FC, #8EC5FC); }
+        .bg-camera { background: linear-gradient(135deg, #43E97B, #38F9D7); }
+        .bg-contacts { background: linear-gradient(135deg, #FA71CD, #C471ED); }
+        .bg-calendar { background: linear-gradient(135deg, #FF9A9E, #FECFEF); }
+        .bg-internet { background: linear-gradient(135deg, #84fab0, #8fd3f4); }
+        .bg-settings { background: linear-gradient(135deg, #a18cd1, #fbc2eb); }
+
+        /* 독바 */
+        .dock {
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            margin: 20px 30px;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-around;
+            position: absolute;
+            bottom: 20px;
+            width: calc(100% - 100px);
+        }
+
+        /* 개별 앱 화면 공통 */
+        .app-screen {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            color: #000;
+            border-radius: 40px;
+            z-index: 20;
+            flex-direction: column;
+        }
+
+        .screen-header {
+            height: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+            border-bottom: 1px solid #eee;
+            background-color: #fff;
+        }
+
+        .screen-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            color: #007AFF;
+            cursor: pointer;
+        }
+
+        /* 메시지 앱 세부 화면 */
+        .chat-list {
+            flex: 1;
+            overflow-y: auto;
+            background-color: #f2f2f2;
+        }
+
+        .chat-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background-color: #fff;
+            border-bottom: 1px solid #f9f9f9;
+            cursor: pointer;
+        }
+
+        .chat-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 20px;
+            background-color: #ddd;
+            margin-right: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+        }
+
+        .chat-info {
+            flex: 1;
+        }
+
+        .chat-name {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .chat-preview {
+            font-size: 14px;
+            color: #777;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chat-time { font-size: 12px; color: #bbb; }
+
+        .unread-badge {
+            background-color: #ff3b30;
+            color: #fff;
+            border-radius: 50%;
+            font-size: 11px;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        /* 전화 앱 세부 화면 */
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 40px;
+            justify-items: center;
+        }
+
+        .key {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .key span { font-size: 10px; color: #777; }
+
+        .call-btn {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background-color: #43E97B;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 32px;
+            cursor: pointer;
+        }
+
+        .display-number {
+            font-size: 36px;
+            text-align: center;
+            margin: 40px 0;
+            letter-spacing: 2px;
+            height: 40px;
+        }
+
+        /* 일반 앱 화면 */
+        .generic-screen-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: #555;
+            background-color: #f9f9f9;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="phone-frame">
+        <div class="punch-hole"><div class="camera-lens"></div></div>
+
+        <!-- 홈 화면 -->
+        <div id="home-screen">
+            <div class="status-bar">
+                <span>14:45</span>
+                <span>🔋</span>
+            </div>
+
+            <div class="home-widgets">
+                <div class="time">14:45</div>
+                <div class="date">10월 22일 목요일</div>
+            </div>
+
+            <div class="app-grid">
+                <a href="#" class="app-icon" onclick="openApp('screen-phone')">
+                    <div class="icon-shape bg-phone">📞</div>
+                    <span class="app-name">전화</span>
+                </a>
+                <a href="#" class="app-icon" onclick="openApp('screen-messages')">
+                    <div class="icon-shape bg-messages">💬</div>
+                    <span class="app-name">카카오톡</span>
+                </a>
+                <a href="#" class="app-icon" onclick="openApp('screen-gallery')">
+                    <div class="icon-shape bg-gallery">🖼️</div>
+                    <span class="app-name">갤러리</span>
+                </a>
+                <a href="#" class="app-icon" onclick="openApp('screen-camera')">
+                    <div class="icon-shape bg-camera">📷</div>
+                    <span class="app-name">카메라</span>
+                </a>
+                <a href="#" class="app-icon" onclick="openApp('screen-contacts')">
+                    <div class="icon-shape bg-contacts">👤</div>
+                    <span class="app-name">연락처</span>
+                </a>
+                <a href="#" class="app-icon" onclick="openApp('screen-calendar')">
+                    <div class="icon-shape bg-calendar">📅</div>
+                    <span class="app-name">캘린더</span>
+                </a>
+                <a href="#" class="app-icon" onclick="openApp('screen-internet')">
+                    <div class="icon-shape bg-internet">🌐</div>
+                    <span class="app-name">인터넷</span>
+                </a>
+                <a href="#" class="app-icon" onclick="openApp('screen-settings')">
+                    <div class="icon-shape bg-settings">⚙️</div>
+                    <span class="app-name">설정</span>
+                </a>
+            </div>
+
+            <div class="dock">
+                <a href="#" class="app-icon" onclick="openApp('screen-phone')">
+                    <div class="icon-shape bg-phone" style="width:50px; height:50px; font-size:22px;">📞</div>
+                </a>
+                <a href="#" class="app-icon" onclick="openApp('screen-messages')">
+                    <div class="icon-shape bg-messages" style="width:50px; height:50px; font-size:22px;">💬</div>
+                </a>
+                <a href="#" class="app-icon" onclick="openApp('screen-internet')">
+                    <div class="icon-shape bg-internet" style="width:50px; height:50px; font-size:22px;">🌐</div>
+                </a>
+                <a href="#" class="app-icon" onclick="openApp('screen-settings')">
+                    <div class="icon-shape bg-settings" style="width:50px; height:50px; font-size:22px;">⚙️</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 전화 앱 화면 -->
+        <div id="screen-phone" class="app-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="closeApp()">확인</button>
+                <div class="screen-title">키패드</div>
+                <button class="back-btn" style="color:#ccc;">편집</button>
+            </div>
+            <div class="display-number" id="dialed-number"></div>
+            <div class="keypad">
+                <div class="key" onclick="appendNumber('1')">1</div>
+                <div class="key" onclick="appendNumber('2')">2<span>ABC</span></div>
+                <div class="key" onclick="appendNumber('3')">3<span>DEF</span></div>
+                <div class="key" onclick="appendNumber('4')">4<span>GHI</span></div>
+                <div class="key" onclick="appendNumber('5')">5<span>JKL</span></div>
+                <div class="key" onclick="appendNumber('6')">6<span>MNO</span></div>
+                <div class="key" onclick="appendNumber('7')">7<span>PQRS</span></div>
+                <div class="key" onclick="appendNumber('8')">8<span>TUV</span></div>
+                <div class="key" onclick="appendNumber('9')">9<span>WXYZ</span></div>
+                <div class="key" onclick="appendNumber('*')">*</div>
+                <div class="key" onclick="appendNumber('0')">0<span>+</span></div>
+                <div class="key" onclick="appendNumber('#')">#</div>
+                <div></div>
+                <div class="call-btn" onclick="makeCall()">📞</div>
+                <div></div>
+            </div>
+        </div>
+
+        <!-- 카카오톡 앱 화면 -->
+        <div id="screen-messages" class="app-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="closeApp()">확인</button>
+                <div class="screen-title">채팅</div>
+                <span style="font-size: 24px;">💬</span>
+            </div>
+            <div class="chat-list">
+                <div class="chat-item">
+                    <div class="chat-img" style="background-color: #ff9900;">👔</div>
+                    <div class="chat-info">
+                        <div class="chat-name">한명오 팀장 <span class="chat-time">오후 2:30</span></div>
+                        <div class="chat-preview">김 대리, 이번 보고서 엉망이야. 다시 써와.</div>
+                    </div>
+                </div>
+                <div class="chat-item">
+                    <div class="chat-img" style="background-color: #ffcccc;">👩</div>
+                    <div class="chat-info">
+                        <div class="chat-name">엄마 <span class="chat-time">오전 9:15</span></div>
+                        <div class="chat-preview">유중혁은 세 번째 회귀자고, 메인 주인공인데...</div>
+                    </div>
+                    <div class="chat-time">
+                        <div class="unread-badge">3</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 일반 앱 화면들 (뒤로가기 버튼 포함) -->
+        <div id="screen-gallery" class="app-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="closeApp()">확인</button>
+                <div class="screen-title">갤러리</div>
+                <div></div>
+            </div>
+            <div class="generic-screen-content">갤러리 앱</div>
+        </div>
+        
+        <div id="screen-camera" class="app-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="closeApp()">확인</button>
+                <div class="screen-title">카메라</div>
+                <div></div>
+            </div>
+            <div class="generic-screen-content">카메라 앱</div>
+        </div>
+
+        <div id="screen-contacts" class="app-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="closeApp()">확인</button>
+                <div class="screen-title">연락처</div>
+                <div></div>
+            </div>
+            <div class="generic-screen-content">연락처 앱</div>
+        </div>
+
+        <div id="screen-calendar" class="app-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="closeApp()">확인</button>
+                <div class="screen-title">캘린더</div>
+                <div></div>
+            </div>
+            <div class="generic-screen-content">캘린더 앱</div>
+        </div>
+
+        <div id="screen-internet" class="app-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="closeApp()">확인</button>
+                <div class="screen-title">인터넷</div>
+                <div></div>
+            </div>
+            <div class="generic-screen-content">인터넷 앱</div>
+        </div>
+
+        <div id="screen-settings" class="app-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="closeApp()">확인</button>
+                <div class="screen-title">설정</div>
+                <div></div>
+            </div>
+            <div class="generic-screen-content">설정 앱</div>
+        </div>
+
+    </div>
+
+    <script>
         function openApp(screenId) {
             document.getElementById('home-screen').style.display = 'none';
             document.getElementById(screenId).style.display = 'flex';
@@ -23,3 +525,6 @@
         function makeCall() {
             alert('전화 거는 중: ' + currentNumber);
         }
+    </script>
+</body>
+</html>
