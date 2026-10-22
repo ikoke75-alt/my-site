@@ -1,30 +1,42 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>스마트폰 웹페이지</title>
+    <title>갤럭시 스타일 웹페이지</title>
     <style>
         body {
             margin: 0;
             padding: 0;
-            background-color: #e0e0e0;
+            background-color: #121212;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
         .phone-frame {
-            width: 375px;
-            height: 812px;
-            background: url('https://w.wallhaven.cc/full/4x/wallhaven-4x589m.jpg') no-repeat center center/cover;
-            border-radius: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            width: 380px;
+            height: 800px;
+            background: url('https://w.wallhaven.cc/full/2e/wallhaven-2epp7p.jpg') no-repeat center center/cover;
+            border-radius: 46px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
             position: relative;
             overflow: hidden;
-            border: 8px solid #000;
+            border: 6px solid #1c1c1c;
+        }
+
+        .punch-hole {
+            width: 14px;
+            height: 14px;
+            background-color: #000;
+            border-radius: 50%;
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
         }
 
         .status-bar {
@@ -32,39 +44,27 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 20px;
+            padding: 0 26px;
             color: white;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 500;
             padding-top: 10px;
-        }
-
-        .notch {
-            width: 150px;
-            height: 30px;
-            background-color: #000;
-            border-bottom-left-radius: 20px;
-            border-bottom-right-radius: 20px;
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
         }
 
         .widget-clock {
             color: white;
-            padding: 20px 30px;
-            margin-top: 20px;
+            padding: 20px 36px;
+            margin-top: 30px;
         }
 
         .time {
-            font-size: 64px;
-            font-weight: 300;
-            letter-spacing: -2px;
+            font-size: 56px;
+            font-weight: 400;
+            letter-spacing: -1px;
         }
 
         .date {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 400;
             opacity: 0.9;
         }
@@ -73,29 +73,49 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 20px;
-            padding: 20px;
+            padding: 26px;
             justify-items: center;
             margin-top: 20px;
         }
 
+        .app-link {
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
         .app-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 15px;
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
             display: flex;
             justify-content: center;
             align-items: center;
             color: white;
-            font-size: 28px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            font-size: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
+        }
+        
+        .app-icon:active {
+            transform: scale(0.92);
+        }
+
+        .app-name {
+            color: white;
+            font-size: 12px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+            font-weight: 400;
         }
 
         .dock {
             width: 320px;
-            height: 80px;
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(20px);
-            border-radius: 30px;
+            height: 84px;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(15px);
+            border-radius: 28px;
             position: absolute;
             bottom: 30px;
             left: 50%;
@@ -104,25 +124,26 @@
             justify-content: space-around;
             align-items: center;
             padding: 0 15px;
-            border: 1px solid rgba(255,255,255,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* App Colors */
-        .bg-messages { background: linear-gradient(135deg, #2nd, #2fd566); }
-        .bg-calendar { background: white; color: #ff3b30; }
-        .bg-photos { background: linear-gradient(135deg, #f0f, #0cf); }
-        .bg-camera { background: #3a3a3c; }
-        .bg-safari { background: #fff; color: #007aff; }
-        .bg-music { background: linear-gradient(135deg, #ff234b, #ff5e3a); }
-        .bg-notes { background: #ffcc00; color: #000; }
-        .bg-maps { background: linear-gradient(135deg, #5ac8fa, #5856d6); }
+        /* App Colors (One UI style) */
+        .bg-phone { background: linear-gradient(135deg, #0575E6, #00F2FE); }
+        .bg-messages { background: linear-gradient(135deg, #FF9900, #FF5500); }
+        .bg-contacts { background: linear-gradient(135deg, #00C9FF, #92FE9D); }
+        .bg-gallery { background: linear-gradient(135deg, #FC354C, #0ABFBC); }
+        .bg-camera { background: #1c1c1c; }
+        .bg-internet { background: linear-gradient(135deg, #8E2DE2, #4A00E0); }
+        .bg-settings { background: #767676; }
+        .bg-calendar { background: #FFFFFF; color: #000000; }
+        .bg-clock { background: linear-gradient(135deg, #4b6cb7, #182848); }
 
     </style>
 </head>
 <body>
 
     <div class="phone-frame">
-        <div class="notch"></div>
+        <div class="punch-hole"></div>
         <div class="status-bar">
             <span>11:59</span>
             <span>🔋</span>
@@ -134,21 +155,53 @@
         </div>
 
         <div class="app-grid">
-            <div class="app-icon bg-messages">💬</div>
-            <div class="app-icon bg-calendar">📅</div>
-            <div class="app-icon bg-photos">🖼️</div>
-            <div class="app-icon bg-camera">📷</div>
-            <div class="app-icon bg-safari">🌐</div>
-            <div class="app-icon bg-music">🎵</div>
-            <div class="app-icon bg-notes">📝</div>
-            <div class="app-icon bg-maps">🗺️</div>
+            <a href="#" class="app-link">
+                <div class="app-icon bg-phone">📞</div>
+                <span class="app-name">전화</span>
+            </a>
+            <a href="#" class="app-link">
+                <div class="app-icon bg-messages">💬</div>
+                <span class="app-name">메시지</span>
+            </a>
+            <a href="#" class="app-link">
+                <div class="app-icon bg-gallery">🖼️</div>
+                <span class="app-name">갤러리</span>
+            </a>
+            <a href="#" class="app-link">
+                <div class="app-icon bg-camera">📷</div>
+                <span class="app-name">카메라</span>
+            </a>
+            <a href="#" class="app-link">
+                <div class="app-icon bg-contacts">👤</div>
+                <span class="app-name">연락처</span>
+            </a>
+            <a href="#" class="app-link">
+                <div class="app-icon bg-calendar">📅</div>
+                <span class="app-name">캘린더</span>
+            </a>
+            <a href="#" class="app-link">
+                <div class="app-icon bg-internet">🌐</div>
+                <span class="app-name">인터넷</span>
+            </a>
+            <a href="#" class="app-link">
+                <div class="app-icon bg-settings">⚙️</div>
+                <span class="app-name">설정</span>
+            </a>
         </div>
 
         <div class="dock">
-            <div class="app-icon bg-messages" style="width:55px; height:55px;">📞</div>
-            <div class="app-icon bg-safari" style="width:55px; height:55px;">🧭</div>
-            <div class="app-icon bg-photos" style="width:55px; height:55px;">📸</div>
-            <div class="app-icon bg-music" style="width:55px; height:55px;">🎧</div>
+            <a href="#" class="app-link">
+                <div class="app-icon bg-phone" style="width:56px; height:56px;">📞</div>
+            </a>
+            <a href="#" class="app-link">
+                <div class="app-icon bg-gallery" style="width:56px; height:56px;">🖼️</div>
+            </a>
+            <a href="#" class="app-link">
+                <div class="app-icon bg-clock" style="width:56px; height:56px;">⏰</div>
+            </a>
+            <a href="#" class="app-link">
+                <div class="app-icon bg-settings" style="width:56px; height:56px;">⚙️</div>
+            </a>
         </div>
     </div>
 
