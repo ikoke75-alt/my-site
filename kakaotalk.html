@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카카오톡</title>
+    <style>
+        body { margin: 0; padding: 0; background-color: #1a1a1a; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        .phone-frame { width: 375px; height: 812px; background-color: #fff; border-radius: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.3); position: relative; overflow: hidden; border: 8px solid #000; }
+        .status-bar { height: 40px; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; color: #000; font-size: 14px; font-weight: 600; }
+        .header { height: 50px; display: flex; justify-content: space-between; align-items: center; padding: 0 15px; background-color: #fff; border-bottom: 1px solid #eee; }
+        .header-title { font-size: 20px; font-weight: 700; color: #000; }
+        .header-icons { display: flex; gap: 15px; font-size: 20px; }
+        .chat-list { height: calc(812px - 90px); overflow-y: auto; background-color: #f2f2f2; }
+        .chat-item { display: flex; align-items: center; padding: 15px; background-color: #fff; border-bottom: 1px solid #f9f9f9; }
+        .profile-img { width: 50px; height: 50px; border-radius: 20px; margin-right: 15px; background-color: #ddd; display: flex; justify-content: center; align-items: center; font-size: 24px; }
+        .chat-info { flex: 1; min-width: 0; }
+        .chat-name { font-size: 16px; font-weight: 700; color: #000; margin-bottom: 5px; display: flex; justify-content: space-between; }
+        .chat-preview { font-size: 13px; color: #777; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .chat-time { font-size: 11px; color: #bbb; align-self: flex-start; margin-top: 5px; }
+        .unread-badge { background-color: #ff3b30; color: #fff; border-radius: 50%; font-size: 11px; width: 18px; height: 18px; display: flex; justify-content: center; align-items: center; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <div class="status-bar">
+            <span>2:49</span>
+            <span>🔋</span>
+        </div>
+        <div class="header">
+            <div class="header-title">채팅</div>
+            <div class="header-icons">
+                <span>💬</span>
+                <span>👤</span>
+                <span>⚙️</span>
+            </div>
+        </div>
+        <div class="chat-list">
+            <a href="#" style="text-decoration: none;">
+                <div class="chat-item">
+                    <div class="profile-img">👤</div>
+                    <div class="chat-info">
+                        <div class="chat-name">
+                            한명오 팀장
+                            <span class="chat-time">오후 2:30</span>
+                        </div>
+                        <div class="chat-preview">김 대리, 이번 보고서 엉망이야. 다시 써와.</div>
+                    </div>
+                </div>
+            </a>
+            <a href="#" style="text-decoration: none;">
+                <div class="chat-item">
+                    <div class="profile-img">👩</div>
+                    <div class="chat-info">
+                        <div class="chat-name">
+                            엄마
+                            <span class="chat-time">오전 9:15</span>
+                        </div>
+                        <div class="chat-preview">유중혁은 세 번째 회귀자고, 메인 주인공인데...</div>
+                    </div>
+                    <div class="chat-time">
+                        <div class="unread-badge">3</div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
