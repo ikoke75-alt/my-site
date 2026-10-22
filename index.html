@@ -306,6 +306,34 @@
             height: 40px;
         }
 
+        /* 연락처 세부 화면 */
+        .contact-list {
+            flex: 1;
+            overflow-y: auto;
+            background-color: #fff;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .contact-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin-right: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+        }
+
+        .contact-name { font-size: 16px; font-weight: 700; }
+
         /* 일반 앱 화면 */
         .generic-screen-content {
             flex: 1;
@@ -425,21 +453,57 @@
                 <div class="chat-item">
                     <div class="chat-img" style="background-color: #ff9900;">👔</div>
                     <div class="chat-info">
-                        <div class="chat-name">한명오 팀장 <span class="chat-time">오후 2:30</span></div>
-                        <div class="chat-preview">김 대리, 이번 보고서 엉망이야. 다시 써와.</div>
+                        <div class="chat-name">한명오 부장님 <span class="chat-time">오후 2:30</span></div>
+                        <div class="chat-preview">독자 씨, 이번 보고서 엉망이야. 다시 써와.</div>
                     </div>
                 </div>
                 <div class="chat-item">
-                    <div class="chat-img" style="background-color: #ffcccc;">👩</div>
+                    <div class="chat-img" style="background-color: #99ccff;">👤</div>
                     <div class="chat-info">
-                        <div class="chat-name">엄마 <span class="chat-time">오전 9:15</span></div>
-                        <div class="chat-preview">유중혁은 세 번째 회귀자고, 메인 주인공인데...</div>
+                        <div class="chat-name">유상아 님 <span class="chat-time">오전 11:20</span></div>
+                        <div class="chat-preview">독자 씨, 오늘 회의 자료 준비되셨나요?</div>
                     </div>
-                    <div class="chat-time">
-                        <div class="unread-badge">3</div>
-                    </div>
+                    div class="chat-img" style="background-color: #99ccff;">👤</div>
+                    <div class="chat-info">
+                        <div class="chat-name">박주임 님 <span class="chat-time">오전 11:20</span></div>
+                        <div class="chat-preview">오늘 바쁘세요?</div>
                 </div>
             </div>
+        </div>
+
+        <!-- 연락처 앱 화면 -->
+        <div id="screen-contacts" class="app-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="closeApp()">확인</button>
+                <div class="screen-title">연락처</div>
+                <div>+</div>
+            </div>
+            <div class="contact-list">
+                <div class="contact-item">
+                    <div class="contact-avatar" style="background-color: #ff9900;">👔</div>
+                    <div class="contact-name">한명오 부장님</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-avatar" style="background-color: #99ccff;">👤</div>
+                    <div class="contact-name">유상아 씨</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-avatar" style="background-color: #ffcc99;">💼</div>
+                    <div class="contact-name">김주임 님</div>
+                </div>
+                 <div class="contact-item">
+                    <div class="contact-avatar" style="background-color: #99ff99;">💼</div>
+                    <div class="contact-name">과장 님</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-avatar" style="background-color: #ff9999;">💼</div>
+                    <div class="contact-name">박주임 님</div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-avatar" style="background-color: #ff9999;">💼</div>
+                    <div class="contact-name">한사원 님</div>
+                </div>
+
         </div>
 
         <!-- 일반 앱 화면들 (뒤로가기 버튼 포함) -->
@@ -459,15 +523,6 @@
                 <div></div>
             </div>
             <div class="generic-screen-content">카메라 앱</div>
-        </div>
-
-        <div id="screen-contacts" class="app-screen">
-            <div class="screen-header">
-                <button class="back-btn" onclick="closeApp()">확인</button>
-                <div class="screen-title">연락처</div>
-                <div></div>
-            </div>
-            <div class="generic-screen-content">연락처 앱</div>
         </div>
 
         <div id="screen-calendar" class="app-screen">
@@ -523,7 +578,11 @@
         }
 
         function makeCall() {
-            alert('전화 거는 중: ' + currentNumber);
+            if (currentNumber.length > 0) {
+                alert('전화 거는 중: ' + currentNumber);
+            } else {
+                alert('번호를 입력해 주세요.');
+            }
         }
     </script>
 </body>
