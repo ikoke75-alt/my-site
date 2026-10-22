@@ -35,6 +35,8 @@
             overflow: hidden;
             border: 8px solid #000;
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
         }
 
         /* 펀치홀 */
@@ -44,10 +46,10 @@
             background-color: #000;
             border-radius: 20px;
             position: absolute;
-            top: 20px;
+            top: 15px;
             left: 50%;
             transform: translateX(-50%);
-            z-index: 10;
+            z-index: 30;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -67,17 +69,25 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 30px;
+            padding: 10px 25px 0 25px;
             font-size: 14px;
             font-weight: 600;
             color: #fff;
-            padding-top: 10px;
+            z-index: 25;
+            flex-shrink: 0;
         }
 
-        /* 홈 화면 위젯 */
+        /* 홈 화면 */
+        #home-screen {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            position: relative;
+        }
+
         .home-widgets {
             text-align: center;
-            margin-top: 60px;
+            margin-top: 40px;
         }
 
         .time {
@@ -97,9 +107,9 @@
         .app-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 25px;
+            gap: 20px;
             padding: 20px 25px;
-            margin-top: 60px;
+            margin-top: 30px;
         }
 
         .app-icon {
@@ -109,6 +119,7 @@
             justify-content: center;
             text-decoration: none;
             color: #fff;
+            cursor: pointer;
         }
 
         .icon-shape {
@@ -149,13 +160,13 @@
             background-color: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(20px);
             border-radius: 30px;
-            margin: 20px 30px;
-            padding: 15px 20px;
+            margin: 0 25px;
+            padding: 12px 15px;
             display: flex;
             justify-content: space-around;
             position: absolute;
             bottom: 20px;
-            width: calc(100% - 100px);
+            width: calc(100% - 80px);
         }
 
         /* 개별 앱 화면 공통 */
@@ -166,114 +177,171 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #fff;
-            color: #000;
-            border-radius: 40px;
+            background-color: #000;
+            color: #fff;
+            border-radius: 32px;
             z-index: 20;
             flex-direction: column;
+            box-sizing: border-box;
+            padding-top: var(--status-bar-height);
         }
 
         .screen-header {
-            height: 50px;
+            padding: 10px 20px;
+            background-color: #000;
+            border-bottom: 1px solid #222;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 15px;
-            border-bottom: 1px solid #eee;
-            background-color: #fff;
+            flex-shrink: 0;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .edit-btn, .back-btn {
+            color: #0a84ff;
+            font-size: 16px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .tab-group {
+            display: flex;
+            background-color: #1c1c1e;
+            border-radius: 9px;
+            padding: 2px;
+            width: 140px;
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 5px 0;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 7px;
+            cursor: pointer;
+            color: #8e8e93;
+        }
+
+        .tab.active {
+            background-color: #636366;
+            color: #fff;
         }
 
         .screen-title {
-            font-size: 18px;
+            font-size: 28px;
             font-weight: 700;
+            padding: 10px 20px 5px 20px;
         }
 
-        .back-btn {
-            background: none;
-            border: none;
-            font-size: 16px;
-            font-weight: 600;
-            color: #007AFF;
-            cursor: pointer;
-        }
-
-        /* 메시지 앱 세부 화면 */
-        .chat-list {
+        /* 전화 앱 내부 콘텐츠 영역 */
+        .tab-content {
+            display: none;
             flex: 1;
             overflow-y: auto;
-            background-color: #f2f2f2;
+            flex-direction: column;
         }
 
-        .chat-item {
+        .tab-content.active {
+            display: flex;
+        }
+
+        /* 통화 목록 스타일 */
+        .call-list {
+            flex: 1;
+            overflow-y: auto;
+            background-color: #000;
+        }
+
+        .call-item {
             display: flex;
             align-items: center;
-            padding: 15px;
-            background-color: #fff;
-            border-bottom: 1px solid #f9f9f9;
-            cursor: pointer;
+            padding: 12px 20px;
+            border-bottom: 1px solid #1c1c1e;
         }
 
-        .chat-img {
-            width: 50px;
-            height: 50px;
-            border-radius: 20px;
-            background-color: #ddd;
-            margin-right: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 24px;
+        .call-icon {
+            font-size: 16px;
+            margin-right: 12px;
+            color: #ff453a;
         }
 
-        .chat-info {
+        .call-info {
             flex: 1;
         }
 
-        .chat-name {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 5px;
+        .caller-name {
+            font-size: 17px;
+            font-weight: 600;
+            color: #ff453a;
+            margin-bottom: 4px;
             display: flex;
-            justify-content: space-between;
+            align-items: center;
+            gap: 6px;
         }
 
-        .chat-preview {
+        .missed-count {
+            font-size: 15px;
+            font-weight: 700;
+            color: #ff453a;
+        }
+
+        .call-type {
+            font-size: 13px;
+            color: #8e8e93;
+        }
+
+        .call-time {
             font-size: 14px;
-            color: #777;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            color: #8e8e93;
+            margin-right: 10px;
         }
 
-        .chat-time { font-size: 12px; color: #bbb; }
-
-        .unread-badge {
-            background-color: #ff3b30;
-            color: #fff;
+        .info-btn {
+            color: #0a84ff;
+            font-size: 18px;
+            border: 1px solid #0a84ff;
             border-radius: 50%;
-            font-size: 11px;
-            width: 18px;
-            height: 18px;
+            width: 22px;
+            height: 22px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-weight: 600;
+            background: none;
+            cursor: pointer;
         }
 
-        /* 전화 앱 세부 화면 */
+        /* 키패드 스타일 */
+        .display-number {
+            font-size: 32px;
+            text-align: center;
+            margin: 20px 0 10px 0;
+            letter-spacing: 2px;
+            height: 40px;
+            color: #fff;
+        }
+
         .keypad {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            padding: 40px;
+            gap: 15px;
+            padding: 10px 40px;
             justify-items: center;
         }
 
         .key {
-            width: 75px;
-            height: 75px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
-            background-color: #f0f0f0;
+            background-color: #2c2c2e;
+            color: #fff;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -283,68 +351,63 @@
             cursor: pointer;
         }
 
-        .key span { font-size: 10px; color: #777; }
+        .key span { font-size: 10px; color: #8e8e93; }
 
         .call-btn {
-            width: 75px;
-            height: 75px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
-            background-color: #43E97B;
+            background-color: #34c759;
             color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 32px;
+            font-size: 30px;
             cursor: pointer;
         }
 
-        .display-number {
-            font-size: 36px;
-            text-align: center;
-            margin: 40px 0;
-            letter-spacing: 2px;
-            height: 40px;
-        }
-
-        /* 연락처 세부 화면 */
-        .contact-list {
-            flex: 1;
-            overflow-y: auto;
-            background-color: #fff;
-        }
-
-        .contact-item {
+        /* 전화 앱 하단 내비게이션 */
+        .bottom-nav {
+            height: 60px;
+            background-color: #1c1c1e;
+            border-top: 1px solid #2c2c2e;
             display: flex;
+            justify-content: space-around;
             align-items: center;
-            padding: 15px;
-            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            flex-shrink: 0;
         }
 
-        .contact-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: #ddd;
-            margin-right: 15px;
+        .nav-item {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            font-size: 24px;
+            color: #8e8e93;
+            font-size: 10px;
+            text-decoration: none;
+            background: none;
+            border: none;
+            cursor: pointer;
         }
 
-        .contact-name { font-size: 16px; font-weight: 700; }
+        .nav-item.active {
+            color: #0a84ff;
+        }
 
-        /* 일반 앱 화면 */
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 2px;
+        }
+
+        /* 일반 더미 앱 화면 */
         .generic-screen-content {
             flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 24px;
-            color: #555;
-            background-color: #f9f9f9;
+            font-size: 20px;
+            color: #8e8e93;
         }
-
     </style>
 </head>
 <body>
@@ -352,251 +415,359 @@
     <div class="phone-frame">
         <div class="punch-hole"><div class="camera-lens"></div></div>
 
+        <!-- 상단 상태바 -->
+        <div class="status-bar">
+            <span>23:59</span>
+            <span>📡 🔋</span>
+        </div>
+
         <!-- 홈 화면 -->
         <div id="home-screen">
-            <div class="status-bar">
-                <span>14:45</span>
-                <span>🔋</span>
-            </div>
-
             <div class="home-widgets">
-                <div class="time">14:45</div>
+                <div class="time">23:59</div>
                 <div class="date">10월 22일 목요일</div>
             </div>
 
             <div class="app-grid">
-                <a href="#" class="app-icon" onclick="openApp('screen-phone')">
+                <div class="app-icon" onclick="openPhoneApp('recent')">
                     <div class="icon-shape bg-phone">📞</div>
                     <span class="app-name">전화</span>
-                </a>
-                <a href="#" class="app-icon" onclick="openApp('screen-messages')">
+                </div>
+                <div class="app-icon" onclick="openApp('screen-messages')">
                     <div class="icon-shape bg-messages">💬</div>
                     <span class="app-name">카카오톡</span>
-                </a>
-                <a href="#" class="app-icon" onclick="openApp('screen-gallery')">
+                </div>
+                <div class="app-icon" onclick="openApp('screen-gallery')">
                     <div class="icon-shape bg-gallery">🖼️</div>
                     <span class="app-name">갤러리</span>
-                </a>
-                <a href="#" class="app-icon" onclick="openApp('screen-camera')">
+                </div>
+                <div class="app-icon" onclick="openApp('screen-camera')">
                     <div class="icon-shape bg-camera">📷</div>
                     <span class="app-name">카메라</span>
-                </a>
-                <a href="#" class="app-icon" onclick="openApp('screen-contacts')">
+                </div>
+                <div class="app-icon" onclick="openApp('screen-contacts')">
                     <div class="icon-shape bg-contacts">👤</div>
                     <span class="app-name">연락처</span>
-                </a>
-                <a href="#" class="app-icon" onclick="openApp('screen-calendar')">
+                </div>
+                <div class="app-icon" onclick="openApp('screen-calendar')">
                     <div class="icon-shape bg-calendar">📅</div>
                     <span class="app-name">캘린더</span>
-                </a>
-                <a href="#" class="app-icon" onclick="openApp('screen-internet')">
+                </div>
+                <div class="app-icon" onclick="openApp('screen-internet')">
                     <div class="icon-shape bg-internet">🌐</div>
                     <span class="app-name">인터넷</span>
-                </a>
-                <a href="#" class="app-icon" onclick="openApp('screen-settings')">
+                </div>
+                <div class="app-icon" onclick="openApp('screen-settings')">
                     <div class="icon-shape bg-settings">⚙️</div>
                     <span class="app-name">설정</span>
-                </a>
+                </div>
             </div>
 
             <div class="dock">
-                <a href="#" class="app-icon" onclick="openApp('screen-phone')">
+                <div class="app-icon" onclick="openPhoneApp('recent')">
                     <div class="icon-shape bg-phone" style="width:50px; height:50px; font-size:22px;">📞</div>
-                </a>
-                <a href="#" class="app-icon" onclick="openApp('screen-messages')">
+                </div>
+                <div class="app-icon" onclick="openApp('screen-messages')">
                     <div class="icon-shape bg-messages" style="width:50px; height:50px; font-size:22px;">💬</div>
-                </a>
-                <a href="#" class="app-icon" onclick="openApp('screen-internet')">
+                </div>
+                <div class="app-icon" onclick="openApp('screen-internet')">
                     <div class="icon-shape bg-internet" style="width:50px; height:50px; font-size:22px;">🌐</div>
-                </a>
-                <a href="#" class="app-icon" onclick="openApp('screen-settings')">
+                </div>
+                <div class="app-icon" onclick="openApp('screen-settings')">
                     <div class="icon-shape bg-settings" style="width:50px; height:50px; font-size:22px;">⚙️</div>
-                </a>
-            </div>
-        </div>
-
-        <!-- 전화 앱 화면 -->
-        <div id="screen-phone" class="app-screen">
-            <div class="screen-header">
-                <button class="back-btn" onclick="closeApp()">확인</button>
-                <div class="screen-title">키패드</div>
-                <button class="back-btn" style="color:#ccc;">편집</button>
-            </div>
-            <div class="display-number" id="dialed-number"></div>
-            <div class="keypad">
-                <div class="key" onclick="appendNumber('1')">1</div>
-                <div class="key" onclick="appendNumber('2')">2<span>ABC</span></div>
-                <div class="key" onclick="appendNumber('3')">3<span>DEF</span></div>
-                <div class="key" onclick="appendNumber('4')">4<span>GHI</span></div>
-                <div class="key" onclick="appendNumber('5')">5<span>JKL</span></div>
-                <div class="key" onclick="appendNumber('6')">6<span>MNO</span></div>
-                <div class="key" onclick="appendNumber('7')">7<span>PQRS</span></div>
-                <div class="key" onclick="appendNumber('8')">8<span>TUV</span></div>
-                <div class="key" onclick="appendNumber('9')">9<span>WXYZ</span></div>
-                <div class="key" onclick="appendNumber('*')">*</div>
-                <div class="key" onclick="appendNumber('0')">0<span>+</span></div>
-                <div class="key" onclick="appendNumber('#')">#</div>
-                <div></div>
-                <div class="call-btn" onclick="makeCall()">📞</div>
-                <div></div>
-            </div>
-        </div>
-
-        <div id="home-screen">
-            <div class="app-grid">
-                <div class="app-icon-item" onclick="openApp('phone-app')">
-                    <div class="app-icon" style="background-color: #34c759;">📞</div>
-                    <span class="app-name">전화</span>
                 </div>
             </div>
         </div>
 
+        <!-- 통합 전화 앱 화면 -->
         <div id="phone-app" class="app-screen">
-            <div class="screen-header">
-                <div class="header-top">
-                    <button class="edit-btn" onclick="closeApp()">뒤로</button>
-                    <div class="tab-group">
-                        <div class="tab">전체</div>
-                        <div class="tab active">부재중</div>
+            
+            <!-- 1. 최근 통화 탭 (부재중 목록 포함) -->
+            <div id="phone-tab-recent" class="tab-content active">
+                <div class="screen-header">
+                    <div class="header-top">
+                        <button class="back-btn" onclick="closeApp()">뒤로</button>
+                        <div class="tab-group">
+                            <div class="tab" onclick="switchCallTab('all')">전체</div>
+                            <div class="tab active" onclick="switchCallTab('missed')">부재중</div>
+                        </div>
+                        <div style="width: 30px;"></div>
                     </div>
-                    <div style="width: 30px;"></div>
                 </div>
                 <div class="screen-title">최근 통화</div>
-            </div>
 
-            <div class="call-list">
-                <div class="call-item">
-                    <div class="call-icon">↙</div>
-                    <div class="call-info">
-                        <div class="caller-name">
-                            유중혁 <span class="missed-count">(47)</span>
+                <!-- 전체 통화 -->
+                <div id="list-all" class="call-list" style="display: none;">
+                    <div class="call-item">
+                        <div class="call-icon" style="color: #34c759;">↗</div>
+                        <div class="call-info">
+                            <div class="caller-name" style="color: #fff;">유중혁</div>
+                            <div class="call-type">휴대전화</div>
                         </div>
-                        <div class="call-type">휴대전화</div>
+                        <div class="call-time">어제</div>
+                        <button class="info-btn">i</button>
                     </div>
-                    <div class="call-time">방금 전</div>
-                    <button class="info-btn">i</button>
                 </div>
-                <div class="call-item">
-                    <div class="call-icon">↙</div>
-                    <div class="call-info">
-                        <div class="caller-name">
-                            이지혜 <span class="missed-count">(12)</span>
+
+                <!-- 부재중 통화 목록 (김독자 폰) -->
+                <div id="list-missed" class="call-list">
+                    <div class="call-item">
+                        <div class="call-icon">↙</div>
+                        <div class="call-info">
+                            <div class="caller-name">유중혁 <span class="missed-count">(47)</span></div>
+                            <div class="call-type">휴대전화</div>
                         </div>
-                        <div class="call-type">휴대전화</div>
+                        <div class="call-time">방금 전</div>
+                        <button class="info-btn">i</button>
                     </div>
-                    <div class="call-time">10분 전</div>
-                    <button class="info-btn">i</button>
-                </div>
-                <div class="call-item">
-                    <div class="call-icon">↙</div>
-                    <div class="call-info">
-                        <div class="caller-name">
-                            정희원 <span class="missed-count">(8)</span>
+                    <div class="call-item">
+                        <div class="call-icon">↙</div>
+                        <div class="call-info">
+                            <div class="caller-name">이지혜 <span class="missed-count">(12)</span></div>
+                            <div class="call-type">휴대전화</div>
                         </div>
-                        <div class="call-type">휴대전화</div>
+                        <div class="call-time">10분 전</div>
+                        <button class="info-btn">i</button>
                     </div>
-                    <div class="call-time">24분 전</div>
-                    <button class="info-btn">i</button>
-                </div>
-                <div class="call-item">
-                    <div class="call-icon">↙</div>
-                    <div class="call-info">
-                        <div class="caller-name">
-                            유상아 <span class="missed-count">(5)</span>
+                    <div class="call-item">
+                        <div class="call-icon">↙</div>
+                        <div class="call-info">
+                            <div class="caller-name">정희원 <span class="missed-count">(8)</span></div>
+                            <div class="call-type">휴대전화</div>
                         </div>
-                        <div class="call-type">휴대전화</div>
+                        <div class="call-time">24분 전</div>
+                        <button class="info-btn">i</button>
                     </div>
-                    <div class="call-time">오후 11:15</div>
-                    <button class="info-btn">i</button>
-                </div>
-                <div class="call-item">
-                    <div class="call-icon">↙</div>
-                    <div class="call-info">
-                        <div class="caller-name">
-                            이현성 <span class="missed-count">(6)</span>
+                    <div class="call-item">
+                        <div class="call-icon">↙</div>
+                        <div class="call-info">
+                            <div class="caller-name">유상아 <span class="missed-count">(5)</span></div>
+                            <div class="call-type">휴대전화</div>
                         </div>
-                        <div class="call-type">휴대전화</div>
+                        <div class="call-time">오후 11:15</div>
+                        <button class="info-btn">i</button>
                     </div>
-                    <div class="call-time">오후 10:42</div>
-                    <button class="info-btn">i</button>
-                </div>
-                <div class="call-item">
-                    <div class="call-icon">↙</div>
-                    <div class="call-info">
-                        <div class="caller-name">
-                            신유승 <span class="missed-count">(9)</span>
+                    <div class="call-item">
+                        <div class="call-icon">↙</div>
+                        <div class="call-info">
+                            <div class="caller-name">이현성 <span class="missed-count">(6)</span></div>
+                            <div class="call-type">휴대전화</div>
                         </div>
-                        <div class="call-type">휴대전화</div>
+                        <div class="call-time">오후 10:42</div>
+                        <button class="info-btn">i</button>
                     </div>
-                    <div class="call-time">오후 10:10</div>
-                    <button class="info-btn">i</button>
-                </div>
-                <div class="call-item">
-                    <div class="call-icon">↙</div>
-                    <div class="call-info">
-                        <div class="caller-name">
-                            이길영 <span class="missed-count">(11)</span>
+                    <div class="call-item">
+                        <div class="call-icon">↙</div>
+                        <div class="call-info">
+                            <div class="caller-name">신유승 <span class="missed-count">(9)</span></div>
+                            <div class="call-type">휴대전화</div>
                         </div>
-                        <div class="call-type">휴대전화</div>
+                        <div class="call-time">오후 10:10</div>
+                        <button class="info-btn">i</button>
                     </div>
-                    <div class="call-time">오후 10:08</div>
-                    <button class="info-btn">i</button>
-                </div>
-                <div class="call-item">
-                    <div class="call-icon">↙</div>
-                    <div class="call-info">
-                        <div class="caller-name">
-                            김남운 <span class="missed-count">(3)</span>
+                    <div class="call-item">
+                        <div class="call-icon">↙</div>
+                        <div class="call-info">
+                            <div class="caller-name">이길영 <span class="missed-count">(11)</span></div>
+                            <div class="call-type">휴대전화</div>
                         </div>
-                        <div class="call-type">휴대전화</div>
+                        <div class="call-time">오후 10:08</div>
+                        <button class="info-btn">i</button>
                     </div>
-                    <div class="call-time">오후 9:30</div>
-                    <button class="info-btn">i</button>
-                </div>
-                <div class="call-item">
-                    <div class="call-icon">↙</div>
-                    <div class="call-info">
-                        <div class="caller-name">
-                            한명오 부장 <span class="missed-count">(2)</span>
+                    <div class="call-item">
+                        <div class="call-icon">↙</div>
+                        <div class="call-info">
+                            <div class="caller-name">김남운 <span class="missed-count">(3)</span></div>
+                            <div class="call-type">휴대전화</div>
                         </div>
-                        <div class="call-type">휴대전화</div>
+                        <div class="call-time">오후 9:30</div>
+                        <button class="info-btn">i</button>
                     </div>
-                    <div class="call-time">오후 7:15</div>
-                    <button class="info-btn">i</button>
+                    <div class="call-item">
+                        <div class="call-icon">↙</div>
+                        <div class="call-info">
+                            <div class="caller-name">한명오 부장 <span class="missed-count">(2)</span></div>
+                            <div class="call-type">휴대전화</div>
+                        </div>
+                        <div class="call-time">오후 7:15</div>
+                        <button class="info-btn">i</button>
+                    </div>
                 </div>
             </div>
 
+            <!-- 2. 키패드 탭 -->
+            <div id="phone-tab-keypad" class="tab-content">
+                <div class="screen-header">
+                    <button class="back-btn" onclick="closeApp()">뒤로</button>
+                    <div style="font-weight:700;">키패드</div>
+                    <div style="width:30px;"></div>
+                </div>
+                <div class="display-number" id="dialed-number"></div>
+                <div class="keypad">
+                    <div class="key" onclick="appendNumber('1')">1</div>
+                    <div class="key" onclick="appendNumber('2')">2<span>ABC</span></div>
+                    <div class="key" onclick="appendNumber('3')">3<span>DEF</span></div>
+                    <div class="key" onclick="appendNumber('4')">4<span>GHI</span></div>
+                    <div class="key" onclick="appendNumber('5')">5<span>JKL</span></div>
+                    <div class="key" onclick="appendNumber('6')">6<span>MNO</span></div>
+                    <div class="key" onclick="appendNumber('7')">7<span>PQRS</span></div>
+                    <div class="key" onclick="appendNumber('8')">8<span>TUV</span></div>
+                    <div class="key" onclick="appendNumber('9')">9<span>WXYZ</span></div>
+                    <div class="key" onclick="appendNumber('*')">*</div>
+                    <div class="key" onclick="appendNumber('0')">0<span>+</span></div>
+                    <div class="key" onclick="appendNumber('#')">#</div>
+                    <div></div>
+                    <div class="call-btn">📞</div>
+                    <div></div>
+                </div>
+            </div>
+
+            <!-- 전화 앱 하단 내비게이션 -->
             <div class="bottom-nav">
-                <a href="#" class="nav-item">
+                <button class="nav-item" onclick="switchPhoneNav('favorites')">
                     <span class="nav-icon">⭐</span>
                     <span>즐겨찾기</span>
-                </a>
-                <a href="#" class="nav-item active">
+                </button>
+                <button class="nav-item active" id="nav-recent" onclick="switchPhoneNav('recent')">
                     <span class="nav-icon">🕒</span>
                     <span>최근 통화</span>
-                </a>
-                <a href="#" class="nav-item">
+                </button>
+                <button class="nav-item" onclick="switchPhoneNav('contacts')">
                     <span class="nav-icon">👤</span>
                     <span>연락처</span>
-                </a>
-                <a href="#" class="nav-item">
+                </button>
+                <button class="nav-item" id="nav-keypad" onclick="switchPhoneNav('keypad')">
                     <span class="nav-icon">🔢</span>
                     <span>키패드</span>
-                </a>
+                </button>
             </div>
         </div>
+
+        <!-- 기타 일반 앱 화면 (카카오톡, 갤러리 등) -->
+        <div id="screen-messages" class="app-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="closeApp()">홈으로</button>
+                <div style="font-weight:700;">카카오톡</div>
+                <div style="width:30px;"></div>
+            </div>
+            <div class="generic-screen-content">💬 카카오톡 화면</div>
+        </div>
+
+        <div id="screen-gallery" class="app-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="closeApp()">홈으로</button>
+                <div style="font-weight:700;">갤러리</div>
+                <div style="width:30px;"></div>
+            </div>
+            <div class="generic-screen-content">🖼️ 갤러리 화면</div>
+        </div>
+
+        <div id="screen-camera" class="app-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="closeApp()">홈으로</button>
+                <div style="font-weight:700;">카메라</div>
+                <div style="width:30px;"></div>
+            </div>
+            <div class="generic-screen-content">📷 카메라 화면</div>
+        </div>
+
+        <div id="screen-contacts" class="app-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="closeApp()">홈으로</button>
+                <div style="font-weight:700;">연락처</div>
+                <div style="width:30px;"></div>
+            </div>
+            <div class="generic-screen-content">👤 연락처 화면</div>
+        </div>
+
+        <div id="screen-calendar" class="app-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="closeApp()">홈으로</button>
+                <div style="font-weight:700;">캘린더</div>
+                <div style="width:30px;"></div>
+            </div>
+            <div class="generic-screen-content">📅 캘린더 화면</div>
+        </div>
+
+        <div id="screen-internet" class="app-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="closeApp()">홈으로</button>
+                <div style="font-weight:700;">인터넷</div>
+                <div style="width:30px;"></div>
+            </div>
+            <div class="generic-screen-content">🌐 인터넷 화면</div>
+        </div>
+
+        <div id="screen-settings" class="app-screen">
+            <div class="screen-header">
+                <button class="back-btn" onclick="closeApp()">홈으로</button>
+                <div style="font-weight:700;">설정</div>
+                <div style="width:30px;"></div>
+            </div>
+            <div class="generic-screen-content">⚙️ 설정 화면</div>
+        </div>
+
     </div>
 
     <script>
+        // 일반 앱 열기
         function openApp(screenId) {
-            document.getElementById('home-screen').style.display = 'none';
-            document.getElementById(screenId).style.display = 'flex';
+            closeApp();
+            const targetScreen = document.getElementById(screenId);
+            if (targetScreen) {
+                targetScreen.style.display = 'flex';
+            }
         }
 
+        // 전화 앱 전용 열기
+        function openPhoneApp(defaultTab) {
+            closeApp();
+            document.getElementById('phone-app').style.display = 'flex';
+            switchPhoneNav(defaultTab);
+        }
+
+        // 모든 앱 닫고 홈 화면으로 돌아가기
         function closeApp() {
             const screens = document.querySelectorAll('.app-screen');
             screens.forEach(screen => screen.style.display = 'none');
-            document.getElementById('home-screen').style.display = 'flex';
+        }
+
+        // 전화 앱 내부 하단 내비게이션 전환 (최근통화 <-> 키패드)
+        function switchPhoneNav(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.bottom-nav .nav-item').forEach(el => el.classList.remove('active'));
+
+            if (tab === 'keypad') {
+                document.getElementById('phone-tab-keypad').classList.add('active');
+                document.getElementById('nav-keypad').classList.add('active');
+            } else {
+                document.getElementById('phone-tab-recent').classList.add('active');
+                document.getElementById('nav-recent').classList.add('active');
+            }
+        }
+
+        // 최근 통화 내부의 '전체' / '부재중' 탭 전환
+        function switchCallTab(type) {
+            const tabs = document.querySelectorAll('.tab-group .tab');
+            tabs.forEach(t => t.classList.remove('active'));
+
+            if (type === 'all') {
+                tabs[0].classList.add('active');
+                document.getElementById('list-all').style.display = 'block';
+                document.getElementById('list-missed').style.display = 'none';
+            } else {
+                tabs[1].classList.add('active');
+                document.getElementById('list-all').style.display = 'none';
+                document.getElementById('list-missed').style.display = 'block';
+            }
+        }
+
+        // 키패드 번호 입력
+        function appendNumber(num) {
+            const display = document.getElementById('dialed-number');
+            if (display.innerText.length < 13) {
+                display.innerText += num;
+            }
         }
     </script>
 </body>
