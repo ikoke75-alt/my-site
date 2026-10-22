@@ -773,14 +773,12 @@
 </body>
 </html>
 
-        function makeCall() {
-            const display = document.getElementById('dialed-number');
-            const number = display.innerText.trim();
-            if (number === "") {
-                alert("전화번호를 입력해주세요.");
-            } else {
-                alert(number + " 번으로 통화 연결 중...");
-                display.innerText = "";
-            }
-        }
+        <button onclick="playSound()">1</button>
+<audio id="dial-sound" src="dial-tone.mp3"></audio>
 
+<script>
+function playSound() {
+  const sound = document.getElementById("dial-sound");
+  sound.play();
+}
+</script>
